@@ -1,35 +1,76 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# REST API with NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a simple REST API built with NestJS, featuring user authentication, CRUD operations for articles, and data caching. PostgreSQL is used for data storage, while Redis handles caching.
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Authentication API
 
-## Installation
+- **User registration and authentication.**
+- **JWT (JSON Web Tokens)** for handling authentication.
 
-```bash
-$ npm install
+### PostgreSQL Integration
+
+- **Connection to PostgreSQL** using TypeORM.
+- **Database schema management** with migrations.
+
+### CRUD Operations for Articles
+
+- **Article Structure:** Title, description, published date, author.
+- **Operations:** Create, read, update, and delete articles.
+- **Validation:** Input data validation.
+- **Pagination:** Paginated responses for article lists.
+- **Filtering:** Filter articles by criteria such as publication date and author.
+- **Authorization:** Restrict article creation and updates to authenticated users.
+
+### Redis Caching
+
+- **Caching of article read queries.**
+- **Cache invalidation** upon article updates or deletions.
+
+### Testing
+
+- **Unit tests** for business logic validation.
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/test-project.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd test-project
+   ```
+3. Install dependencies
+   ```bash
+   npm i
+   ```
+
+## Configuration
+
+Set up the environment variables in a `.env` file. Required variables include:
+
+```plaintext
+PORT=port
+POSTGRES_HOST=host
+POSTGRES_PORT=poer
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+POSTGRES_DB=dbName
+REDIS_HOST=host
+REDIS_PORT=port
+NODE_ENV=environment
+JWT_SECRET=jwtsecret
+```
+
+## Scripts:
+
+```plaintext
+npm start: Starts the server.
+npm run dev: Starts the server in development mode.
 ```
 
 ## Running the app
@@ -51,23 +92,27 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
-## Support
+## Endpoints
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Authentication:
 
-## Stay in touch
+- **POST** `/auth/register` - Register a new user.
+- **POST** `/auth/login` - Authenticate and get a JWT.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Articles:
 
-## License
+- **GET** `/articles` - List articles with pagination and filtering.
+- **GET** `/articles/:id` - Get a single article by ID.
+- **POST** `/articles` - Create a new article (auth required).
+- **PUT** `/articles/:id` - Update an article by ID (auth required).
+- **DELETE** `/articles/:id` - Delete an article by ID (auth required).
 
-Nest is [MIT licensed](LICENSE).
+### Users:
+
+- **GET** `/users` - List all users (auth required).
+- **GET** `/users/:id` - Get details of a single user by ID (auth required).
+- **POST** `/users` - Create a new user (auth required).
+- **PUT** `/users/:id` - Update user details by ID (auth required).
+- **DELETE** `/users/:id` - Delete a user by ID (auth required).
